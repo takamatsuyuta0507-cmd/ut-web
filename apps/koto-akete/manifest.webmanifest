@@ -1,0 +1,19 @@
+{
+  "name": "あけてね",
+  "short_name": "あけてね",
+  "description": "「会いたくなったら、これを開けて」。状況ラベル付きの手紙を束ねて、リンクで贈る。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF9F7",
+  "theme_color": "#FAF9F7",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}

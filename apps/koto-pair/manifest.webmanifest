@@ -1,0 +1,19 @@
+{
+  "name": "1Q",
+  "short_name": "1Q",
+  "description": "毎日ひとつの質問に、ふたりで答える。答えたら、相手の答えが開く。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF9F7",
+  "theme_color": "#FAF9F7",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>1Q</title>
+  <meta name="description" content="毎日ひとつの質問に、ふたりで答える。答えたら、相手の答えが開く。" />
+
+  <!-- OGP / シェア時のプレビュー -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="koto." />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:url" content="https://koto-pair.pages.dev/" />
+  <meta property="og:title" content="1Q — 毎日ひとつの質問に、ふたりで答える。" />
+  <meta property="og:description" content="答えると、相手の答えが開く。インストール不要、リンクを送るだけ。" />
+  <!-- 仕上げに 1200×630 のOGP画像を用意したら、下を有効化： -->
+  <!-- <meta property="og:image" content="https://koto-pair.pages.dev/ogp.png" /> -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1Q — 毎日ひとつの質問に、ふたりで答える。" />
+  <meta name="twitter:description" content="答えると、相手の答えが開く。インストール不要、リンクを送るだけ。" />
+
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <meta name="theme-color" content="#FAF9F7" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="1Q" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app">
+
+    <!-- ① 今日の1問（起点） -->
+    <section id="mode-create" hidden>
+      <header class="topbar">
+        <span class="wordmark js-brand"></span>
+        <span class="appname">1Q</span>
+      </header>
+      <p class="daylabel">今日の質問</p>
+      <p class="question" id="q1"></p>
+      <button type="button" class="qswitch" id="shuffleQ">べつの質問にする ↻</button>
+      <textarea id="a1" class="answer" rows="3" maxlength="140" placeholder="あなたの答え…"></textarea>
+      <input id="name1" class="namein" type="text" maxlength="12" placeholder="おなまえ（任意）" autocomplete="off" />
+      <button class="btn-primary" id="send1">答えて、相手に送る</button>
+      <p class="note">相手は<b>インストール不要</b>。リンクを開くだけで答えられます。あなたの答えは、相手が答えるまで開きません。</p>
+    </section>
+
+    <!-- ② 相手から届いた（あなたの番） -->
+    <section id="mode-answer" hidden>
+      <p class="fromhead" id="fromhead">パートナーから 今日の1問</p>
+      <p class="question" id="q2"></p>
+      <div class="sealed">
+        <span class="seal">🔒</span>
+        <span class="sealtext">あなたが答えると、相手の答えが開きます</span>
+      </div>
+      <textarea id="a2" class="answer" rows="3" maxlength="140" placeholder="あなたの答え…"></textarea>
+      <input id="name2" class="namein" type="text" maxlength="12" placeholder="おなまえ（任意）" autocomplete="off" />
+      <button class="btn-primary" id="answer2">答えて、ふたりの答えを見る</button>
+    </section>
+
+    <!-- ③ ふたりの答え（解禁） -->
+    <section id="mode-both" hidden>
+      <p class="question" id="q3"></p>
+      <div class="ans-block">
+        <p class="ans-name" id="nameA"></p>
+        <p class="ans-text" id="textA"></p>
+      </div>
+      <div class="ans-divider"></div>
+      <div class="ans-block">
+        <p class="ans-name" id="nameB"></p>
+        <p class="ans-text" id="textB"></p>
+      </div>
+      <button class="btn-primary" id="sendBack" hidden>この結果を相手にも送り返す</button>
+      <a class="make-own" id="makeOwn" href="./">自分も1問つくる → <span class="js-brand"></span></a>
+    </section>
+
+    <footer class="credit" id="footer">
+      <span>by UT.</span>
+      <span class="sep">·</span>
+      <a href="https://x.com/UT_Portfolio_X" target="_blank" rel="noopener">X ↗</a>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" hidden><span id="toastMsg"></span></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

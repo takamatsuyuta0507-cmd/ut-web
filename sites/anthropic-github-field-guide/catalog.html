@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>カタログ / Catalog — 全90リポジトリを横断検索｜Field Guide</title>
+<meta name="description" content="AnthropicのGitHub公開リポジトリ全90個を、カテゴリ・難易度・キーワードで絞り込み。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main>
+  <section class="kicker-page" style="padding-bottom:8px">
+    <div class="wrap">
+      <div class="crumbs reveal"><a href="index.html">ホーム</a><span>/</span>カタログ</div>
+      <span class="eyebrow reveal" style="margin-top:1em">Catalog</span>
+      <h1 class="reveal">全リポジトリ<span class="en">All <span data-count-total>90</span> repositories</span></h1>
+      <p class="lede reveal">カテゴリ・難易度・キーワードで横断検索。スター数の多い順に並びます。<span class="note">（「ミラー」= 外部OSSのフォーク／ミラー）</span></p>
+    </div>
+  </section>
+
+  <div class="controls">
+    <div class="wrap">
+      <div class="search">
+        <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+        <input id="search-input" type="search" placeholder="名前・説明・タグ・言語で検索（例: RAG / 自動化 / Rust）" aria-label="検索">
+      </div>
+      <div class="filters" id="filter-cat" aria-label="カテゴリ"></div>
+      <div class="filters" id="filter-lvl" aria-label="難易度"></div>
+    </div>
+  </div>
+
+  <section style="padding-bottom:clamp(52px,8vw,104px)">
+    <div class="wrap">
+      <div class="result-count" id="result-count">—</div>
+      <div class="repo-grid" id="catalog-grid"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="data.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

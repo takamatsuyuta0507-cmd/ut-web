@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Last</title>
+  <meta name="description" content="最後にやったの、いつ？ やったらタップ。経過日数が大きく出ます。" />
+
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <meta name="theme-color" content="#FAF9F7" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Last" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <span class="wordmark" id="wordmark" aria-label="brand"></span>
+      <span class="appname">LAST</span>
+      <button class="add" id="addBtn" aria-label="あたらしく追加">＋</button>
+    </header>
+
+    <ul class="list" id="list" aria-label="一覧"></ul>
+
+    <section class="empty" id="empty" hidden>
+      <p class="empty-title">最後にやったの、いつ？</p>
+      <p class="empty-sub">やったらタップ。経過日数が大きく出ます。</p>
+      <div class="seed" id="seed">
+        <button class="chip" data-emoji="🪴" data-name="観葉植物の水やり">🪴 観葉植物の水やり</button>
+        <button class="chip" data-emoji="🌀" data-name="換気扇そうじ">🌀 換気扇そうじ</button>
+        <button class="chip" data-emoji="👁" data-name="コンタクト交換">👁 コンタクト交換</button>
+        <button class="chip" data-emoji="🚗" data-name="洗車">🚗 洗車</button>
+      </div>
+    </section>
+
+    <footer class="credit">
+      <span>by UT.</span>
+      <span class="sep">·</span>
+      <a id="supportLink" target="_blank" rel="noopener">☕ 応援する</a>
+      <span class="sep">·</span>
+      <a id="noteLink" target="_blank" rel="noopener">制作ノート</a>
+    </footer>
+  </main>
+
+  <!-- 追加・編集シート -->
+  <div class="backdrop" id="backdrop" hidden></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+    <h2 class="sheet-title" id="sheetTitle">あたらしく追加</h2>
+
+    <label class="field">
+      <span class="flabel">なまえ</span>
+      <input id="fName" type="text" placeholder="観葉植物の水やり" maxlength="40" autocomplete="off" />
+    </label>
+
+    <div class="field">
+      <span class="flabel">絵文字（任意）</span>
+      <div class="emoji-row">
+        <input id="fEmoji" type="text" maxlength="2" placeholder="🪴" />
+        <div class="emoji-suggest" id="emojiSuggest">
+          <button type="button">🪴</button>
+          <button type="button">🌀</button>
+          <button type="button">👁</button>
+          <button type="button">💧</button>
+          <button type="button">🧹</button>
+          <button type="button">🚗</button>
+          <button type="button">🛏️</button>
+          <button type="button">🌿</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="flabel">目安の間隔（任意・超過でオレンジに）</span>
+      <div class="chips" id="intervalChips">
+        <button type="button" class="chip is-active" data-days="">なし</button>
+        <button type="button" class="chip" data-days="3">3日</button>
+        <button type="button" class="chip" data-days="7">週1</button>
+        <button type="button" class="chip" data-days="30">月1</button>
+      </div>
+      <input id="fInterval" type="number" min="1" max="999" placeholder="カスタム（日）" />
+    </div>
+
+    <label class="field">
+      <span class="flabel">最後にやった日</span>
+      <input id="fDate" type="date" />
+    </label>
+
+    <div class="sheet-actions">
+      <button class="btn-ghost danger" id="deleteBtn" hidden>削除</button>
+      <span class="spacer"></span>
+      <button class="btn-ghost" id="cancelBtn">キャンセル</button>
+      <button class="btn-primary sm" id="saveBtn">保存</button>
+    </div>
+  </div>
+
+  <!-- Undo トースト -->
+  <div class="toast" id="toast" hidden>
+    <span id="toastMsg"></span>
+    <button id="undoBtn">元に戻す</button>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

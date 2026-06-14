@@ -1,0 +1,19 @@
+{
+  "name": "Ticket",
+  "short_name": "Ticket",
+  "description": "手作りの券をつくって、リンクで送れる。肩たたき券・家事代行券など。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF9F7",
+  "theme_color": "#FAF9F7",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Ticket</title>
+  <meta name="description" content="手作りの券をつくって、リンクで送れる。肩たたき券・家事代行券など。" />
+
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <meta name="theme-color" content="#FAF9F7" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Ticket" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app">
+
+    <!-- ============ つくる ============ -->
+    <section id="create">
+      <header class="topbar">
+        <span class="wordmark js-brand"></span>
+        <span class="appname">TICKET</span>
+      </header>
+      <p class="lead">おくる券をつくる</p>
+
+      <div class="field">
+        <span class="flabel">どんな券？</span>
+        <div class="chips" id="tplChips">
+          <button class="chip is-active" data-tpl="katatataki">💆 肩たたき</button>
+          <button class="chip" data-tpl="kaji">🧹 家事代行</button>
+          <button class="chip" data-tpl="hug">🤗 ハグ</button>
+          <button class="chip" data-tpl="otsukai">🛍️ おつかい</button>
+          <button class="chip" data-tpl="wagamama">🎫 わがまま</button>
+          <button class="chip" data-tpl="free">🎟️ 自由</button>
+        </div>
+        <input id="fTitle" type="text" placeholder="券の名前（例：おはなし券）" maxlength="20" hidden />
+      </div>
+
+      <div class="field">
+        <span class="flabel">回数</span>
+        <div class="chips" id="countChips">
+          <button class="chip" data-c="1">1回</button>
+          <button class="chip is-active" data-c="3">3回</button>
+          <button class="chip" data-c="5">5回</button>
+          <button class="chip" data-c="0">∞</button>
+        </div>
+      </div>
+
+      <label class="field">
+        <span class="flabel">おくり主</span>
+        <input id="fFrom" type="text" placeholder="ゆうた" maxlength="16" autocomplete="off" />
+      </label>
+
+      <label class="field">
+        <span class="flabel">ひとこと（任意）</span>
+        <input id="fMsg" type="text" placeholder="いつもありがとう" maxlength="40" autocomplete="off" />
+      </label>
+
+      <div class="preview-wrap">
+        <div class="ticket" id="preview"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" id="copyBtn">リンクをコピー</button>
+        <button class="btn-ghost" id="shareBtn">共有</button>
+        <button class="btn-ghost" id="imgBtn">画像で保存</button>
+      </div>
+      <p class="note">リンクを送ると、相手は<b>インストール不要</b>で開けます。内容はリンクの中だけ（サーバーに保存されません）。</p>
+    </section>
+
+    <!-- ============ もらう ============ -->
+    <section id="receive" hidden>
+      <p class="recv-head">券がとどきました</p>
+      <div class="ticket big" id="rticket"></div>
+      <div class="use-row">
+        <button class="btn-primary" id="useBtn">つかう</button>
+        <button class="btn-ghost" id="undoUse" hidden>ひとつ戻す</button>
+      </div>
+      <div class="cta">
+        <a class="make-own" id="makeOwn" href="./">自分も作る → <span class="js-brand"></span></a>
+      </div>
+    </section>
+
+    <footer class="credit">
+      <span>by UT.</span>
+      <span class="sep">·</span>
+      <a id="supportLink" target="_blank" rel="noopener">☕ 応援する</a>
+      <span class="sep">·</span>
+      <a id="noteLink" target="_blank" rel="noopener">制作ノート</a>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" hidden><span id="toastMsg"></span></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "Last",
+  "short_name": "Last",
+  "description": "最後にやったの、いつ？ やったらタップ、経過日数が大きく出ます。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF9F7",
+  "theme_color": "#FAF9F7",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}

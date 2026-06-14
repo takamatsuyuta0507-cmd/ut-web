@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anthropic GitHub Field Guide — 全90リポジトリを実務の武器に</title>
+<meta name="description" content="AnthropicのGitHub公開リポジトリ（全90個）を4つの柱に整理し、何を・どの順で・どう実務に使うかを学べる非公式ガイド。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main>
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="bg-grid"></div>
+    <div class="wrap inner">
+      <span class="eyebrow">Anthropic GitHub · Field Guide</span>
+      <h1 class="en">Learn the whole<br>toolkit<span class="dot">.</span>
+        <span class="jp">AnthropicのGitHub、全<span data-count-total>90</span>リポジトリを実務の武器に。</span>
+      </h1>
+      <p class="lead">Claude Code・各言語SDK・Skills・業界特化・安全性研究まで。公式リポジトリを<b>4つの柱</b>に整理し、<b>何を・どの順で・どう仕事に使うか</b>を一望できる学習ガイド。</p>
+      <div class="btn-row">
+        <a class="btn" href="paths.html">ロードマップを見る <span class="arrow">→</span></a>
+        <a class="btn ghost" href="catalog.html">全リポジトリを開く</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="v" data-count-total>90</div><div class="k">公開リポジトリ</div></div>
+        <div class="stat"><div class="v">4<span class="u">領域</span></div><div class="k">学習の柱</div></div>
+        <div class="stat"><div class="v">7<span class="u">本</span></div><div class="k">実務ロードマップ</div></div>
+        <div class="stat"><div class="v">6<span class="u">例</span></div><div class="k">実務での使いどころ</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 01 全体像 / pillars ===== -->
+  <section class="section" id="overview">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="num">01 — Overview</span>
+        <h2>4つの柱で全体像をつかむ<span class="en">The four pillars</span></h2>
+        <p>90のリポジトリは、ざっくり「つくる・つかう・まなぶ・しらべる」に分けられます。まずは自分の目的に近い柱から入るのが近道です。</p>
+      </div>
+      <div class="pillars" id="pillar-grid"></div>
+    </div>
+  </section>
+
+  <!-- ===== 02 実務での使いどころ ===== -->
+  <section class="section" id="usecases">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="num">02 — In practice</span>
+        <h2>実務での使いどころ<span class="en">Put it to work</span></h2>
+        <p>「結局、仕事のどこに効くのか」から逆引きで。それぞれ代表的なリポジトリにリンクしています。</p>
+      </div>
+      <div class="cards" id="usecase-grid"></div>
+    </div>
+  </section>
+
+  <!-- ===== 03 ロードマップ ===== -->
+  <section class="section" id="roadmap-teaser">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="num">03 — Roadmap</span>
+        <h2>目的別の学習ロードマップ<span class="en">Where to start</span></h2>
+        <p>「何から手をつければいいか」を、7つの実務シナリオごとに順番で示しています。</p>
+      </div>
+      <div class="cards" id="roadmap-grid"></div>
+      <div class="btn-row reveal" style="margin-top:28px">
+        <a class="btn ghost" href="paths.html">7本のロードマップを見る <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 04 カタログ teaser ===== -->
+  <section class="section" id="catalog-teaser">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="num">04 — Catalog</span>
+        <h2>全リポジトリを横断検索<span class="en">Browse all 90</span></h2>
+        <p>カテゴリ・難易度・キーワードで、90個すべてを絞り込み。「あれ何だっけ」の逆引きにも。</p>
+      </div>
+      <div class="callout reveal">
+        <h4>📚 カタログの使い方</h4>
+        <ul>
+          <li><b>難易度</b>（入門 / 実践 / 応用 / 研究 / 参考）で、今の自分に合うものだけを表示。</li>
+          <li><b>カテゴリ</b>で柱の中をさらに細かく（SDK・Skills・業界特化・研究…）。</li>
+          <li><b>検索</b>はリポジトリ名・説明・タグ・言語を横断します（例: 「RAG」「自動化」「Rust」）。</li>
+        </ul>
+        <div class="btn-row" style="margin-top:18px"><a class="btn" href="catalog.html">カタログを開く <span class="arrow">→</span></a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="data.js"></script>
+<script src="site.js"></script>
+<script>
+(function(){
+  const {PILLARS,CATS,REPOS,USECASES,PATHS}=window.GUIDE;
+  const U=window.GUIDE_UTIL;
+  const PAGE={build:'build.html',use:'use.html',learn:'learn.html',research:'research.html'};
+
+  // ---- pillars ----
+  const pg=document.getElementById('pillar-grid');
+  PILLARS.forEach(p=>{
+    const repos=REPOS.filter(r=>p.cats.includes(r.c));
+    const flag=repos.slice().sort((a,b)=>b.s-a.s).slice(0,3).map(r=>r.n).join(' · ');
+    pg.appendChild(U.el(`
+      <a class="pillar reveal" href="${PAGE[p.id]}" style="--pc:var(--p-${p.id})">
+        <div class="en">${p.en}</div>
+        <div class="jp">${p.jp}</div>
+        <div class="lead-l">${p.lead}</div>
+        <p>${U.esc(p.desc)}</p>
+        <div class="note" style="margin-top:.8em">${U.esc(flag)} …</div>
+        <div class="meta">
+          <span class="count"><b>${repos.length}</b> repos</span>
+          <span class="go">見る <span class="arrow">→</span></span>
+        </div>
+      </a>`));
+  });
+
+  // ---- usecases ----
+  const ug=document.getElementById('usecase-grid');
+  USECASES.forEach(uc=>{
+    const links=uc.repos.map(n=>`<a class="tag" href="${U.repoUrl(n)}" target="_blank" rel="noopener">${n}</a>`).join('');
+    ug.appendChild(U.el(`
+      <div class="use-card reveal">
+        <div class="num">${uc.num}</div>
+        <h3>${U.esc(uc.title)}</h3>
+        <p>${U.esc(uc.desc)}</p>
+        <div class="links">${links}</div>
+      </div>`));
+  });
+
+  // ---- roadmap teaser (first 3) ----
+  const rg=document.getElementById('roadmap-grid');
+  PATHS.slice(0,3).forEach(p=>{
+    rg.appendChild(U.el(`
+      <a class="use-card reveal" href="paths.html#${p.id}">
+        <div class="num">${p.num}</div>
+        <h3>${U.esc(p.title)}</h3>
+        <p>${U.esc(p.goal)}</p>
+        <div class="links"><span class="tag">${p.steps.length} ステップ</span><span class="tag">${U.esc(p.audience)}</span></div>
+      </a>`));
+  });
+
+  U.observe(document);
+})();
+</script>
+</body>
+</html>

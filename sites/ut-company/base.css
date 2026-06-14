@@ -1,0 +1,197 @@
+/* =========================================================
+   UT. — base.css  (canonical house stylesheet)
+   The single source of truth for tokens + reusable primitives.
+   New sites: <link rel="stylesheet" href="base.css"> then add a
+   page-specific stylesheet on top. Do NOT redefine tokens elsewhere.
+   ========================================================= */
+
+:root {
+  /* ---- palette (CANONICAL — koto lineage) ---- */
+  --base:       #FFFFFF;   /* pure white surfaces (cards, inputs) */
+  --bg:         #FAF9F7;   /* page background (paper) */
+  --bg-soft:    #F2EFEA;   /* hover / inset panels */
+  --ink:        #1B1B1B;   /* primary text */
+  --ink-soft:   #6B6259;   /* body / secondary */
+  --ink-faint:  #736B62;   /* captions / meta (AA on --bg) */
+  --line:       #ECEAE6;   /* hairlines */
+  --line-soft:  #F0EBE3;
+  --accent:     #FF5C1A;   /* THE orange. ≤5% of any screen. */
+  --accent-ink: #E84E0F;   /* hover / deeper orange */
+  --tint:       #FFF1EA;   /* faint orange wash */
+
+  /* ---- type (unified to Noto Sans JP everywhere) ---- */
+  --font-display-en: "Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic UI",system-ui,sans-serif;
+  --font-display-jp: "Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic UI",system-ui,sans-serif;
+  --font-body:       "Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic UI",system-ui,sans-serif;
+
+  --maxw: 1180px;
+  --gutter: clamp(24px, 6vw, 96px);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.8;
+  font-feature-settings: "palt" 1;
+  letter-spacing: 0.02em;
+  line-break: strict;
+}
+::selection { background: var(--accent); color: #fff; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ---- keyboard focus ring ---- */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+/* ---- reduced motion: stop all animation/transition ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- layout helpers ---- */
+.wrap { max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
+
+.eyebrow {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.32em;
+  text-transform: uppercase; color: var(--accent-ink);
+  display: inline-flex; align-items: center; gap: 0.7em;
+}
+.eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--accent); display: inline-block; }
+
+.section-label {
+  display: flex; align-items: baseline; gap: 1rem;
+  font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-faint);
+}
+.section-label .num {
+  font-family: var(--font-display-en); font-size: 1.05rem; letter-spacing: 0;
+  color: var(--accent); font-weight: 600;
+}
+
+/* ---- header / nav ---- */
+.site-header {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: clamp(18px, 2.4vw, 30px) var(--gutter);
+  transition: background .4s var(--ease), border-color .4s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.site-header.scrolled {
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(12px); border-bottom: 1px solid var(--line);
+}
+.brand {
+  font-family: var(--font-display-en); font-size: 1.35rem; font-weight: 600;
+  letter-spacing: 0.01em; display: flex; align-items: center; gap: 0.55rem;
+}
+.brand .dot {                 /* the dot motif — a true round circle, always orange */
+  color: transparent;          /* hide the period glyph, keep its spacing */
+  position: relative;
+  margin-left: -0.14em;
+}
+.brand .dot::before {
+  content: ""; position: absolute; left: 0; bottom: 0.06em;
+  width: 0.2em; height: 0.2em; border-radius: 50%; background: var(--accent);
+}
+.nav { display: flex; align-items: center; gap: clamp(18px, 2.6vw, 40px); }
+.nav a { font-size: 0.82rem; letter-spacing: 0.14em; color: var(--ink-soft); position: relative; transition: color .25s var(--ease); }
+.nav a::after {
+  content: ""; position: absolute; left: 0; bottom: -5px; width: 100%; height: 1px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease);
+}
+.nav a:hover { color: var(--ink); }
+.nav a:hover::after { transform: scaleX(1); }
+.nav .contact-link { color: var(--ink); font-weight: 500; }
+@media (max-width: 720px) { .nav .nav-page { display: none; } }
+
+/* ---- buttons ---- */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6em;
+  font-size: 0.82rem; letter-spacing: 0.12em; padding: 0.95em 1.7em;
+  border-radius: 999px; border: 1px solid var(--ink);
+  transition: all .3s var(--ease); cursor: pointer; background: none; color: var(--ink);
+}
+.btn .arrow { transition: transform .3s var(--ease); }
+.btn:hover .arrow { transform: translateX(4px); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-ink); border-color: var(--accent-ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--bg); }
+
+/* ---- reveal-on-scroll (paired with behavior.js) ---- */
+.reveal { opacity: 0; transform: translateY(22px); }
+.in-view .reveal, .reveal.in-view {
+  opacity: 1; transform: none;
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+/* failsafe: forced end-state if the transition is throttled (background tab/iframe) */
+.reveal.is-shown { opacity: 1 !important; transform: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1 !important; transform: none !important; } }
+
+/* ---- contact (dark-quiet section) ---- */
+.contact {
+  padding-block: clamp(90px, 15vh, 190px);
+  background: var(--bg-soft); color: var(--ink);
+  position: relative; overflow: hidden;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+}
+.contact .glow {
+  position: absolute; width: 58vw; height: 58vw; max-width: 720px; max-height: 720px;
+  right: -10vw; top: -14vw;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent), transparent 64%);
+  pointer-events: none;
+}
+.contact h2.contact-jp-head {
+  margin: clamp(24px, 4vh, 40px) 0 0;
+  font-family: var(--font-display-jp); font-weight: 600;
+  font-size: clamp(1.9rem, 5vw, 3.6rem); line-height: 1.45; letter-spacing: 0.05em;
+}
+.contact .channels {
+  margin-top: clamp(46px, 7vh, 80px); display: flex; gap: clamp(28px, 5vw, 64px); flex-wrap: wrap;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent); padding-top: clamp(28px, 4vh, 44px);
+}
+.contact .channel .k { font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 50%, transparent); }
+.contact .channel .v { margin-top: 0.5em; font-size: 1rem; transition: color .25s var(--ease); }
+.contact .channel a.v:hover { color: var(--accent-ink); }
+
+/* ---- contact form (Web3Forms — underline style) ---- */
+[hidden] { display: none !important; }   /* utility: .cform{display:flex} otherwise overrides the hidden attr */
+.cform { margin-top: clamp(30px, 5vh, 52px); max-width: 540px; display: flex; flex-direction: column; gap: 26px; }
+.cform label { display: flex; flex-direction: column; gap: 8px; }
+.cform label span { font-size: 0.72rem; letter-spacing: 0.2em; color: color-mix(in srgb, var(--ink) 55%, transparent); }
+.cform input[type="text"], .cform input[type="email"], .cform textarea {
+  background: none; border: none; border-bottom: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+  border-radius: 0; padding: 8px 2px; font-family: inherit; font-size: 1rem; color: var(--ink);
+  outline: none; transition: border-color .3s var(--ease);
+}
+.cform input:focus, .cform textarea:focus { border-bottom-color: var(--accent); }
+.cform textarea { resize: vertical; min-height: 6.5em; line-height: 1.8; }
+.cform .hp { display: none; }                 /* honeypot */
+.cform button { align-self: flex-start; margin-top: 4px; }
+.form-err { margin: 0; font-size: 0.85rem; color: var(--accent-ink); }
+.cform-done { margin-top: clamp(30px, 5vh, 52px); font-family: var(--font-display-jp); font-size: clamp(1.2rem, 2.6vw, 1.7rem); font-weight: 500; line-height: 2; }
+
+/* ---- footer ---- */
+.footer {
+  background: var(--bg-soft); color: color-mix(in srgb, var(--ink) 58%, transparent);
+  padding: clamp(28px, 4vh, 44px) var(--gutter);
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  font-size: 0.76rem; letter-spacing: 0.1em;
+}
+.footer .brand { font-size: 1.05rem; color: var(--ink); }
+.footer .to-top { color: inherit; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.7rem; }
+.footer .to-top:hover { color: var(--accent-ink); }
+
+/* ---- Japanese readability (apply to body copy, NOT nav/buttons/display) ---- */
+.lead, .jp-sub, .body p, .lead-statement { word-break: auto-phrase; text-wrap: pretty; hanging-punctuation: allow-end; }
+.nb { white-space: nowrap; }   /* keep 「…」 phrases from breaking */

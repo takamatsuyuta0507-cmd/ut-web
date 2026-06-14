@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>あけてね — そのときに、開けてほしい手紙。｜koto.</title>
+  <meta name="description" content="「会いたくなったら、これを開けて」。状況ラベル付きの手紙を束ねて、リンクで贈る。インストール不要・中身はリンクの中だけ。" />
+
+  <!-- OGP -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="koto." />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:url" content="https://koto-akete.pages.dev/" />
+  <meta property="og:title" content="あけてね — そのときに、開けてほしい手紙。" />
+  <meta property="og:description" content="状況ラベル付きの手紙を束ねて、リンクで贈る。相手はインストール不要、リンクを開くだけ。" />
+  <meta property="og:image" content="https://koto-akete.pages.dev/ogp.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="あけてね — そのときに、開けてほしい手紙。" />
+  <meta name="twitter:description" content="状況ラベル付きの手紙を束ねて、リンクで贈る。相手はインストール不要。" />
+  <meta name="twitter:image" content="https://koto-akete.pages.dev/ogp.png" />
+
+  <link rel="canonical" href="https://koto-akete.pages.dev/" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <meta name="theme-color" content="#FAF9F7" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="あけてね" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app">
+
+    <!-- ① つくる -->
+    <section id="mode-create" hidden>
+      <header class="topbar">
+        <span class="wordmark js-brand"></span>
+        <span class="appname">あけてね</span>
+      </header>
+      <h1 class="lead-jp">そのときに、開けてほしい手紙を。</h1>
+      <p class="sub-jp">「会いたくなったら」「落ち込んだとき」——その時が来たら開く手紙を、束ねてリンクで贈ります。</p>
+      <ul class="usecases" aria-label="使いどころ">
+        <li>遠距離に</li><li>卒業・送別に</li><li>誕生日に</li><li>いつかの子どもへ</li>
+      </ul>
+      <p class="note">相手は<b>インストール不要</b>、リンクを開くだけ。<b>中身はリンクの中だけ</b>で、サーバーには送られません。</p>
+
+      <p class="step-label">つくる</p>
+      <div id="letters" class="letters"></div>
+
+      <button type="button" class="add-letter" id="addLetter">＋ 手紙を追加</button>
+
+      <label class="from-field">
+        <span>差出人のおなまえ（任意）</span>
+        <input id="fromName" type="text" maxlength="16" placeholder="例：はる" autocomplete="off" />
+      </label>
+
+      <div class="gauge" id="gauge">
+        <div class="gauge-bar"><div class="gauge-fill" id="gaugeFill"></div></div>
+        <p class="gauge-label" id="gaugeLabel">手紙を書くと、容量の目安が出ます。</p>
+      </div>
+
+      <button class="btn-primary" id="makeLink">リンクをつくって送る</button>
+
+      <datalist id="labelTemplates"></datalist>
+    </section>
+
+    <!-- ② 届いた束（封筒一覧） -->
+    <section id="mode-open" hidden>
+      <header class="topbar">
+        <span class="wordmark js-brand"></span>
+        <span class="appname">あけてね</span>
+      </header>
+      <h1 class="from-head" id="fromHead"></h1>
+      <p class="note">いまの気持ちに合う封筒を、ひとつ選んで開けてください。何度でも読み返せます。</p>
+      <div class="envelope-grid" id="envelopes"></div>
+      <a class="make-own" id="makeOwn" href="./">自分も束をつくる → <span class="js-brand"></span></a>
+    </section>
+
+    <!-- ③ 1通を開く（オーバーレイ） -->
+    <div id="opener" class="opener" hidden role="dialog" aria-modal="true" aria-labelledby="openerTitle">
+      <div class="opener-card" id="openerCard">
+        <h2 id="openerTitle" class="sr-only">手紙</h2>
+        <button class="opener-close" id="openerClose" type="button" aria-label="閉じる">×</button>
+        <div id="openerBody"></div>
+      </div>
+    </div>
+
+    <footer class="credit" id="footer">
+      <a href="https://ut-koto.pages.dev/" target="_blank" rel="noopener">koto.</a>
+      <span class="sep">·</span>
+      <a href="https://ut-company.pages.dev/" target="_blank" rel="noopener">会社</a>
+      <span class="sep">·</span>
+      <a href="https://ut-portfolio.pages.dev/" target="_blank" rel="noopener">UT.</a>
+      <span class="sep">·</span>
+      <a href="https://x.com/UT_Portfolio_X" target="_blank" rel="noopener">X ↗</a>
+      <span class="sep" id="copySep">·</span>
+      <span id="copyText">© 2026 UT.</span>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" hidden><span id="toastMsg"></span></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

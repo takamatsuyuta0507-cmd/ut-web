@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>koto. — 1つのことだけ、きれいに片づくアプリ。</title>
+<meta name="description" content="koto（こと）は、1つのことだけをきれいに片づける小さなアプリのシリーズ。個人スタジオ UT. が手がけています。One app, one job." />
+<meta name="theme-color" content="#FFFFFF" />
+<!-- OGP / Twitter -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="koto." />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:url" content="https://ut-koto.pages.dev/" />
+<meta property="og:title" content="koto. — 1つのことだけ、きれいに片づくアプリ。" />
+<meta property="og:description" content="koto（こと）は、1つのことだけをきれいに片づける小さなアプリのシリーズ。個人スタジオ UT. が手がけています。" />
+<meta property="og:image" content="https://ut-koto.pages.dev/ogp.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="koto. — 1つのことだけ、きれいに片づくアプリ。" />
+<meta name="twitter:description" content="1つのことだけをする小さなアプリのシリーズ。by UT." />
+<meta name="twitter:image" content="https://ut-koto.pages.dev/ogp.png" />
+<link rel="canonical" href="https://ut-koto.pages.dev/" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FAF9F7'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FF5C1A'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* =========================================================
+     koto — a series of single-purpose apps by UT.
+     Self-contained · system fonts only · orange ≤ 5% of screen
+     ========================================================= */
+
+  :root {
+    --base:   #FFFFFF;
+    --paper:  #FAF9F7;
+    --ink:    #1B1B1B;
+    --sub:    #5f5f5f;
+    --line:   #ECEAE6;
+    --orange: #FF5C1A;
+    --deep:   #E84E0F;
+    --tint:   #FFF1EA;
+
+    /* type — unified to Noto Sans JP */
+    --font: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", system-ui, sans-serif;
+    --font-jp: var(--font);
+    --font-en: var(--font);
+    --mono: var(--font);
+
+    --maxw: 1080px;
+    --gutter: clamp(20px, 5.5vw, 64px);
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --radius: 22px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --base:  #141312;
+      --paper: #1C1B1A;
+      --ink:   #F2F0EC;
+      --sub:   #9A958D;
+      --line:  #2C2A27;
+      --tint:  #2A1F18;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    background: var(--base);
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    font-feature-settings: "palt" 1;
+    font-variant-numeric: tabular-nums;
+    line-break: strict;
+    word-break: auto-phrase;
+    text-wrap: pretty;
+  }
+
+  ::selection { background: var(--orange); color: #fff; }
+
+  a { color: inherit; text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .wrap { max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
+
+  .en {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--sub);
+    font-weight: 400;
+  }
+
+  .c-orange { color: var(--orange); }
+
+  .arrow-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 0.92rem;
+  }
+  .arrow-link .arrow { transition: transform .3s var(--ease); color: var(--orange); }
+  .arrow-link:hover .arrow,
+  .arrow-link:focus-visible .arrow { transform: translateX(4px); }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(18px); }
+  .reveal.in-view {
+    opacity: 1; transform: none;
+    transition: opacity .9s var(--ease), transform .9s var(--ease);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; }
+    html { scroll-behavior: auto !important; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* =========================================================
+     Header
+     ========================================================= */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(16px, 2.2vw, 22px) var(--gutter);
+    background: color-mix(in srgb, var(--base) 86%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .4s var(--ease);
+  }
+  .site-header.scrolled { border-bottom-color: var(--line); }
+
+  .wordmark {
+    font-family: var(--font-en);
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .wordmark .dot {
+    color: transparent;
+    position: relative;
+    margin-left: -0.12em;
+  }
+  .wordmark .dot::before {
+    content: ""; position: absolute; left: 0; bottom: 0.06em;
+    width: 0.2em; height: 0.2em; border-radius: 50%; background: var(--orange);
+  }
+
+  .back-link {
+    font-size: 0.86rem;
+    letter-spacing: 0.04em;
+    color: var(--sub);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-weight: 500;
+    transition: color .25s var(--ease);
+  }
+  .back-link .ar { transition: transform .3s var(--ease); }
+  .back-link:hover, .back-link:focus-visible { color: var(--ink); }
+  .back-link:hover .ar, .back-link:focus-visible .ar { transform: translateX(-3px); }
+
+  /* =========================================================
+     Hero
+     ========================================================= */
+  .hero {
+    padding-top: clamp(64px, 13vh, 140px);
+    padding-bottom: clamp(56px, 11vh, 120px);
+  }
+  .hero .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7em;
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sub);
+    margin: 0 0 clamp(28px, 5vh, 48px);
+  }
+  .hero .eyebrow .seed {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: inline-block;
+  }
+  .hero h1 {
+    margin: 0;
+    font-family: var(--font-jp);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    max-width: 16ch;
+  }
+  .hero h1 .pd { color: var(--orange); }
+  .hero .one-job {
+    margin: clamp(22px, 4vh, 34px) 0 0;
+    font-family: var(--font-en);
+    font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+    letter-spacing: 0.06em;
+    color: var(--sub);
+    font-weight: 500;
+  }
+  .hero .lead {
+    margin: clamp(26px, 4.5vh, 40px) 0 0;
+    max-width: 40ch;
+    color: var(--sub);
+    font-size: clamp(0.98rem, 1.4vw, 1.08rem);
+  }
+  .hero .lead strong { color: var(--ink); font-weight: 500; }
+
+  /* =========================================================
+     Concept
+     ========================================================= */
+  .concept {
+    padding-block: clamp(60px, 10vh, 120px);
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .concept .grid {
+    display: grid;
+    grid-template-columns: 0.42fr 1fr;
+    gap: clamp(28px, 6vw, 80px);
+    align-items: start;
+  }
+  .concept .label {
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--sub);
+    display: flex;
+    align-items: baseline;
+    gap: 0.8em;
+  }
+  .concept .label .idx {
+    color: var(--orange);
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .concept .statement {
+    margin: 0;
+    font-family: var(--font-jp);
+    font-size: clamp(1.3rem, 3vw, 2.05rem);
+    line-height: 1.6;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .concept .statement .hl {
+    color: var(--orange);
+  }
+  .concept .statement .sub {
+    display: block;
+    margin-top: 1.1em;
+    font-family: var(--font);
+    font-size: clamp(0.96rem, 1.4vw, 1.05rem);
+    line-height: 1.9;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--sub);
+    max-width: 46ch;
+  }
+  @media (max-width: 720px) {
+    .concept .grid { grid-template-columns: 1fr; gap: 22px; }
+  }
+
+  /* =========================================================
+     Apps
+     ========================================================= */
+  .apps { padding-block: clamp(64px, 11vh, 130px); }
+  .apps .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: clamp(32px, 5vh, 56px);
+  }
+  .apps .head h2 {
+    margin: 0;
+    font-family: var(--font-jp);
+    font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .apps .head .count {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sub);
+  }
+  .apps .head .count b { color: var(--orange); font-weight: 600; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(16px, 2.4vw, 24px);
+  }
+  @media (max-width: 620px) {
+    .card-grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: clamp(24px, 3.2vw, 34px);
+    background: var(--base);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  @media (prefers-color-scheme: light) {
+    .card { background: var(--base); }
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--orange) 36%, var(--line));
+    box-shadow: 0 14px 30px -22px color-mix(in srgb, var(--ink) 50%, transparent);
+  }
+
+  .card .icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    flex: none;
+  }
+  .card .icon svg { display: block; }
+
+  .card .name {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6em;
+  }
+  .card .name h3 {
+    margin: 0;
+    font-size: 1.18rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .card .name .tag {
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sub);
+    font-family: var(--mono);
+  }
+
+  .card .copy { display: flex; flex-direction: column; gap: 4px; }
+  .card .copy .jp {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 500;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .card .copy .en { margin: 0; }
+  .card .note {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--sub);
+  }
+
+  .card .open {
+    margin-top: auto;
+    padding-top: 6px;
+  }
+
+  /* live badge (pinned right of the name row) */
+  .card .name .badge-live,
+  .feature .name .badge-live {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 600;
+    font-family: var(--mono);
+  }
+  .card .name .badge-live .d,
+  .feature .name .badge-live .d {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange);
+  }
+
+  /* featured single app (horizontal) */
+  .feature {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: clamp(20px, 3.5vw, 48px);
+    padding: clamp(26px, 3.6vw, 44px);
+    background: var(--base);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .feature:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--orange) 36%, var(--line));
+    box-shadow: 0 16px 34px -24px color-mix(in srgb, var(--ink) 50%, transparent);
+  }
+  .feature .icon {
+    width: 64px; height: 64px;
+    border-radius: 18px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: grid; place-items: center; flex: none;
+  }
+  .feature .body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .feature .name { display: flex; align-items: baseline; gap: 0.6em; flex-wrap: wrap; }
+  .feature .name h3 { margin: 0; font-family: var(--font-en); font-size: 1.55rem; font-weight: 600; letter-spacing: 0; }
+  .feature .name .tag {
+    font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--sub); font-family: var(--mono);
+  }
+  .feature .jp { margin: 2px 0 0; font-size: clamp(1.05rem, 1.7vw, 1.22rem); font-weight: 500; line-height: 1.6; }
+  .feature .en { margin: 0; }
+  .feature .note { margin: 4px 0 0; font-size: 0.9rem; line-height: 1.75; color: var(--sub); }
+  .feature .go { flex: none; }
+  .feature .go .arrow-link { font-size: 1rem; }
+  @media (max-width: 720px) {
+    .feature {
+      grid-template-columns: 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .feature .go { margin-top: 4px; }
+  }
+
+  /* =========================================================
+     Next
+     ========================================================= */
+  .next {
+    padding-block: clamp(58px, 10vh, 120px);
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .next .inner {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(18px, 3vw, 30px);
+    max-width: 32em;
+  }
+  .next .seed {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--orange);
+    margin-top: 0.7em;
+    flex: none;
+  }
+  .next p {
+    margin: 0;
+    font-family: var(--font-jp);
+    font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+    line-height: 1.6;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .next p .en {
+    display: block;
+    margin-top: 0.9em;
+    font-family: var(--font-en);
+    font-size: 0.92rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--sub);
+  }
+
+  /* =========================================================
+     Footer
+     ========================================================= */
+  .footer {
+    padding: clamp(34px, 5vh, 52px) var(--gutter);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+    font-size: 0.78rem;
+    color: var(--sub);
+    letter-spacing: 0.04em;
+  }
+  .footer .by {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .footer .by .wm { font-family: var(--font-en); font-weight: 600; color: var(--ink); font-size: 1.1rem; }
+  .footer .by .copy { color: var(--sub); letter-spacing: 0.04em; margin-left: 0.3em; }
+  .footer .by .wm .dot {
+    color: transparent;
+    position: relative;
+    margin-left: -0.12em;
+  }
+  .footer .by .wm .dot::before {
+    content: ""; position: absolute; left: 0; bottom: 0.05em;
+    width: 0.2em; height: 0.2em; border-radius: 50%; background: var(--orange);
+  }
+  .footer .port {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    transition: color .25s var(--ease);
+  }
+  .footer .port .ar { color: var(--orange); transition: transform .3s var(--ease); }
+  .footer .port:hover, .footer .port:focus-visible { color: var(--ink); }
+  .footer .port:hover .ar, .footer .port:focus-visible .ar { transform: translateX(3px); }
+  .footer .foot-links { display: inline-flex; align-items: center; gap: clamp(16px, 3vw, 28px); flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header" id="siteHeader">
+    <a href="#top" class="wordmark" aria-label="koto — ホームへ">koto<span class="dot">.</span></a>
+    <a href="https://ut-portfolio.pages.dev/" class="back-link"><span class="ar" aria-hidden="true">←</span> UT.</a>
+  </header>
+
+  <main id="top">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero wrap">
+      <p class="eyebrow reveal"><span class="seed" aria-hidden="true"></span> koto — a series by UT.</p>
+      <h1 class="reveal" style="transition-delay:.06s">1つの<span class="pd">こと</span>だけ、きれいに片づくアプリ。</h1>
+      <p class="one-job reveal" style="transition-delay:.14s">One app, one job.</p>
+      <p class="lead reveal" style="transition-delay:.2s">あれもこれもではなく、<br /><strong>たった1つのこと</strong>をする小さなアプリたち。</p>
+    </section>
+
+    <!-- ===================== CONCEPT ===================== -->
+    <section class="concept">
+      <div class="wrap grid">
+        <div class="label reveal"><span class="idx">01</span> Concept / 思想</div>
+        <p class="statement reveal" style="transition-delay:.06s">
+          機能は、1つでいい。
+          <span class="sub">ひらいて、ひとつのことをして、そっと閉じる。<br />引き算のなかに、ちょうどいい心地よさが詰まっています。</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== APPS ===================== -->
+    <!-- 公開中はあけてねのみ。アプリが増えたら、下の .feature を .card-grid の複数カードに戻す。 -->
+    <section class="apps wrap" id="apps">
+      <div class="head">
+        <h2 class="reveal">アプリ</h2>
+        <p class="count reveal" style="transition-delay:.05s">公開中 <b>01</b></p>
+      </div>
+
+      <!-- あけてね (live, featured) -->
+      <article class="feature reveal">
+        <span class="icon" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 30 30" fill="none">
+            <rect x="5" y="9" width="20" height="14" rx="2.5" stroke="#767676" stroke-width="1.5" stroke-opacity="0.55"/>
+            <path d="M6 11 L15 17 L24 11" stroke="#767676" stroke-width="1.5" stroke-opacity="0.55" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <circle cx="15" cy="17" r="2.2" fill="#FF5C1A"/>
+          </svg>
+        </span>
+        <div class="body">
+          <div class="name">
+            <h3>あけてね</h3>
+            <span class="tag">手紙を束ねて</span>
+            <span class="badge-live"><span class="d" aria-hidden="true"></span> 公開中</span>
+          </div>
+          <p class="jp">そのときに、開けてほしい手紙を。</p>
+          <p class="en">Letters to open when…</p>
+          <p class="note">状況のラベルをつけて束ね、リンクで贈る。相手はインストール不要。</p>
+        </div>
+        <span class="go">
+          <a href="https://koto-akete.pages.dev/" target="_blank" rel="noopener" class="arrow-link" aria-label="あけてね をひらく（新しいタブで開く）">ひらく <span class="arrow" aria-hidden="true">→</span></a>
+        </span>
+      </article>
+    </section>
+
+    <!-- ===================== NEXT ===================== -->
+    <section class="next">
+      <div class="wrap">
+        <div class="inner reveal">
+          <span class="seed" aria-hidden="true"></span>
+          <p>これからも、<br />「1つの<span class="c-orange">こと</span>」を<br />ひとつずつ増やしていきます。<span class="en">More single things, one at a time.</span></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <span class="by">by <span class="wm">UT<span class="dot">.</span></span> <span class="copy">© 2026 UT.</span></span>
+    <nav class="foot-links" aria-label="関連リンク">
+      <a href="https://ut-portfolio.pages.dev/" class="port">UT. <span class="ar" aria-hidden="true">→</span></a>
+      <a href="https://ut-company.pages.dev/" class="port">会社 <span class="ar" aria-hidden="true">→</span></a>
+      <a href="https://x.com/UT_Portfolio_X" target="_blank" rel="noopener" class="port">X <span class="ar" aria-hidden="true">↗</span></a>
+    </nav>
+  </footer>
+
+  <script>
+    // header border on scroll
+    var header = document.getElementById('siteHeader');
+    var onScroll = function () {
+      if (window.scrollY > 8) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // reveal on view
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var items = document.querySelectorAll('.reveal');
+    var show = function (el) { el.classList.add('in-view'); };
+    var showAll = function () { items.forEach(show); };
+    if (reduce || !('IntersectionObserver' in window)) {
+      showAll();
+    } else {
+      // reveal anything already in (or near) the viewport right away
+      var revealVisible = function () {
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        items.forEach(function (el) {
+          if (el.classList.contains('in-view')) return;
+          if (el.getBoundingClientRect().top < vh * 0.94) show(el);
+        });
+      };
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      items.forEach(function (el) { io.observe(el); });
+      requestAnimationFrame(revealVisible);
+      // failsafe: never leave content hidden if IO is throttled (e.g. background iframe)
+      setTimeout(showAll, 900);
+    }
+  </script>
+
+</body>
+</html>

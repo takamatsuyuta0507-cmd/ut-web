@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>つくる / Build — Claude Code・エージェント・SDK｜Field Guide</title>
+<meta name="description" content="Claudeで開発する。Claude Code、エージェントSDK、各言語の公式SDK、MCP連携をまとめて学ぶ。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main>
+  <section class="kicker-page">
+    <div class="wrap">
+      <div class="crumbs reveal"><a href="index.html">ホーム</a><span>/</span>つくる</div>
+      <span class="eyebrow reveal" style="margin-top:1em">Pillar 01 · Build</span>
+      <h1 class="reveal">つくる<span class="en">Build with Claude — <span data-count-pillar="build">26</span> repositories</span></h1>
+      <p class="lede reveal">コードを書く人の中核。<b>Claude Code</b>で日々の開発を任せ、慣れたら<b>Agent SDK</b>で自分のエージェントを内製。アプリに組み込むなら<b>各言語の公式SDK</b>から。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+
+      <div class="cat-block reveal">
+        <div class="cat-head"><h3>Claude Code・エージェント</h3><span class="c-count"><b data-count="code">·</b> リポジトリ</span><span class="c-line"></span></div>
+        <p class="note" style="margin:-6px 0 18px;max-width:64ch">Claude本体とエージェント構築の中核。まず <code>claude-code</code> を入れて日々の作業を任せ、パターンが見えてきたら <code>claude-agent-sdk</code> で自動化を内製していく流れが王道です。</p>
+        <div class="repo-grid" data-repos="code"></div>
+      </div>
+
+      <div class="cat-block reveal">
+        <div class="cat-head"><h3>公式SDK・API</h3><span class="c-count"><b data-count="sdk">·</b> リポジトリ</span><span class="c-line"></span></div>
+        <p class="note" style="margin:-6px 0 18px;max-width:64ch">プロダクトにAIを組み込むなら、使っている言語の公式SDKから。Python / TypeScript が王道、AWS基盤なら Bedrock版、コスト管理に tokenizer も。</p>
+        <div class="repo-grid" data-repos="sdk"></div>
+      </div>
+
+      <div class="cat-block reveal">
+        <div class="cat-head"><h3>MCP連携</h3><span class="c-count"><b data-count="mcp">·</b> リポジトリ</span><span class="c-line"></span></div>
+        <p class="note" style="margin:-6px 0 18px;max-width:64ch">外部ツール・サービスとClaudeをつなぐ Model Context Protocol 関連。</p>
+        <div class="repo-grid" data-repos="mcp"></div>
+      </div>
+
+      <div class="cat-block reveal">
+        <div class="cat-head"><h3>話題・実験</h3><span class="c-count"><b data-count="fun">·</b> リポジトリ</span><span class="c-line"></span></div>
+        <p class="note" style="margin:-6px 0 18px;max-width:64ch">Anthropic発の話題作。AIがどこまで書けるかを測る読み物として。</p>
+        <div class="repo-grid" data-repos="fun"></div>
+      </div>
+
+      <div class="callout reveal">
+        <h4>🛠 実務メモ — 取り組む順番</h4>
+        <ul>
+          <li><b>1.</b> まず <code>claude-code</code> を日々の制作に導入（最速で効果が出る）。</li>
+          <li><b>2.</b> アプリに組み込むなら <code>anthropic-sdk-python</code> / <code>-typescript</code>。</li>
+          <li><b>3.</b> 繰り返し作業が見えてきたら <code>claude-agent-sdk-*</code> でエージェント化。</li>
+          <li><b>4.</b> CIに乗せて運用自動化は <code>claude-code-action</code>。</li>
+        </ul>
+        <div class="btn-row" style="margin-top:16px">
+          <a class="btn ghost" href="paths.html#product">プロダクト組み込みのロードマップ <span class="arrow">→</span></a>
+          <a class="btn ghost" href="paths.html#agent">エージェント構築のロードマップ <span class="arrow">→</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="data.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

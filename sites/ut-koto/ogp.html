@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>koto. — OGP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --base:   #FFFFFF;
+    --paper:  #FAF9F7;
+    --ink:    #1B1B1B;
+    --sub:    #5f5f5f;
+    --line:   #ECEAE6;
+    --orange: #FF5C1A;
+    --font: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #d9d6d0; }
+  body {
+    display: grid;
+    place-items: center;
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* exact 1200×630 frame for PNG export */
+  .ogp {
+    width: 1200px;
+    height: 630px;
+    background: var(--base);
+    color: var(--ink);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 92px 100px;
+  }
+
+  /* hairline border + paper inset for warmth */
+  .ogp::after {
+    content: "";
+    position: absolute; inset: 0;
+    border: 1px solid var(--line);
+  }
+
+  /* eyebrow */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 19px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sub);
+    font-weight: 500;
+    margin-bottom: 44px;
+  }
+  .eyebrow .seed {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: inline-block;
+  }
+
+  /* wordmark with real round dot */
+  .mark {
+    font-size: 96px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1;
+    margin-bottom: 40px;
+  }
+  .mark .dot {
+    color: transparent;
+    position: relative;
+    margin-left: -0.04em;
+  }
+  .mark .dot::before {
+    content: "";
+    position: absolute; left: 0; bottom: 0.04em;
+    width: 0.18em; height: 0.18em;
+    border-radius: 50%;
+    background: var(--orange);
+  }
+
+  .headline {
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+    max-width: 20ch;
+  }
+  .headline .c { color: var(--orange); }
+
+  .sub {
+    margin-top: 34px;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--sub);
+  }
+
+  /* by-line, bottom-right */
+  .by {
+    position: absolute;
+    right: 100px;
+    bottom: 84px;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0;
+  }
+  .by .dot {
+    color: transparent;
+    position: relative;
+    margin-left: -0.06em;
+  }
+  .by .dot::before {
+    content: "";
+    position: absolute; left: 0; bottom: 0.04em;
+    width: 0.2em; height: 0.2em;
+    border-radius: 50%;
+    background: var(--orange);
+  }
+</style>
+</head>
+<body>
+  <div class="ogp">
+    <p class="eyebrow"><span class="seed"></span> a series by UT.</p>
+    <div class="mark">koto<span class="dot">.</span></div>
+    <p class="headline">1つの<span class="c">こと</span>だけ、<br />きれいに片づくアプリ。</p>
+    <p class="sub">One app, one job.</p>
+    <p class="by">by UT<span class="dot">.</span></p>
+  </div>
+</body>
+</html>
