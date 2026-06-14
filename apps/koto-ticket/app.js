@@ -14,7 +14,7 @@ const BRAND = "koto.";
 
 /* 投げ銭リンク：アカウント作成後、この2つのURLを差し替えるだけ。 */
 const SUPPORT_STRIPE = "https://buy.stripe.com/00w3cx7aIeaK4lMdOCa3u00?client_reference_id=koto-ticket"; // UT. を応援する
-const SUPPORT_NOTE   = "https://note.com/your-id";          // ← note のURL
+const SUPPORT_NOTE   = "";          // ← note のURL
 (function paintFooter() {
   const ready = (u) => u && !/your-link|your-id/.test(u);
   const wire = (id, url) => {

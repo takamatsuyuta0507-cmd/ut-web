@@ -12,7 +12,7 @@ const BRAND = "koto.";
 
 /* 投げ銭リンク：実URLに差し替えると、フッターに自動表示されます（プレースホルダーのうちは非表示）。 */
 const SUPPORT_STRIPE = "https://buy.stripe.com/00w3cx7aIeaK4lMdOCa3u00?client_reference_id=koto-pair"; // UT. を応援する
-const SUPPORT_NOTE   = "https://note.com/your-id";          // ← note のURL
+const SUPPORT_NOTE   = "";          // ← note のURL
 (function paintFooter() {
   const foot = document.getElementById("footer");
   if (!foot) return;

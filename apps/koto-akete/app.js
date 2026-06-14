@@ -13,7 +13,7 @@ const BRAND = "koto.";
 
 /* 応援/ノート：実URLに差し替えるとフッターに自動表示（プレースホルダーのうちは非表示）。 */
 const SUPPORT_STRIPE = "https://buy.stripe.com/00w3cx7aIeaK4lMdOCa3u00?client_reference_id=koto-akete";
-const SUPPORT_NOTE   = "https://note.com/your-id";
+const SUPPORT_NOTE   = "";
 (function paintFooter() {
   const foot = document.getElementById("footer");
   if (!foot) return;
