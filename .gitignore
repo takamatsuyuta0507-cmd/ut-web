@@ -75,3 +75,5 @@
 **/tweaks-*.jsx
 # プロフィール README の下書き（本体は username/username リポへ）
 /brand/github-profile/
+# 実験・プロトタイプ（ローカルで試す用・公開しない）
+**/_experiments/
