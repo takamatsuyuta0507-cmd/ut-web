@@ -47,6 +47,10 @@
 
   <!-- HERO -->
   <section class="c-hero">
+    <!-- 点描の余白 (Quiet Field) — decorative back layer, even quieter than
+         portfolio: sparser grid + fainter ink + calmer lean. pointer-events:none. -->
+    <canvas id="hero-field" aria-hidden="true"
+            data-gap="56" data-dot="0.07" data-radius="1.05" data-reach="120" data-push="12"></canvas>
     <div class="wrap">
       <p class="eyebrow reveal">Company — 会社案内</p>
       <h1 class="reveal" style="transition-delay:.06s">UT<span class="dot">.</span></h1>
@@ -193,5 +197,8 @@
 </footer>
 
 <script src="behavior.js"></script>
+<!-- 点描の余白 (Quiet Field) — hero back layer. Shared component (canonical in
+     ut-brand skill). Config via canvas#hero-field data-* in the .c-hero above. -->
+<script src="./quiet-field.js"></script>
 </body>
 </html>

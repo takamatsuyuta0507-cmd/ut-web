@@ -127,6 +127,18 @@ img { display: block; max-width: 100%; }
 .btn-primary:hover { background: var(--accent-ink); border-color: var(--accent-ink); }
 .btn-ghost:hover { background: var(--ink); color: var(--bg); }
 
+/* ---- 点描の余白 (Quiet Field) — hero back layer (paired with quiet-field.js) ----
+   Decorative dot grid behind hero text. Ignores the pointer, never blocks
+   scroll/tap. Top+bottom mask fades the grid out so no hard "line of dots"
+   appears at the section seam. The hero container must be position:relative
+   and the hero text/content must sit at z-index >= 1. */
+#hero-field {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block; z-index: 0; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 74%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 74%, transparent 100%);
+}
+
 /* ---- reveal-on-scroll (paired with behavior.js) ---- */
 .reveal { opacity: 0; transform: translateY(22px); }
 .in-view .reveal, .reveal.in-view {

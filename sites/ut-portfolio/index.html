@@ -56,8 +56,10 @@
   <section class="heroes" data-hero="A" id="heroes">
 
     <!-- 点描の余白 (Quiet Field) — decorative back layer, pointer-events:none.
-         JS off / reduced-motion → a still grid (or nothing). Never blocks text. -->
-    <canvas id="hero-field" aria-hidden="true"></canvas>
+         JS off / reduced-motion → a still grid (or nothing). Never blocks text.
+         Config = portfolio reference values (also the script defaults). -->
+    <canvas id="hero-field" aria-hidden="true"
+            data-gap="46" data-dot="0.10" data-radius="1.1" data-reach="130" data-push="16"></canvas>
 
     <!-- ---------- HERO A — centered editorial ---------- -->
     <div class="hero hero-A">
@@ -292,127 +294,10 @@
 <!-- behavior: header scroll + reveal (vanilla). Tweaks（開発用パネル/React）は本番から除外。 -->
 <script src="behavior.js"></script>
 
-<!-- 点描の余白 (Quiet Field) — hero back layer. Self-contained IIFE, deferred,
-     decoupled from behavior.js. Decoration only; never blocks content. -->
-<script>
-(function () {
-  var canvas = document.getElementById('hero-field');
-  var hero = document.getElementById('heroes');
-  if (!canvas || !hero) return;
-  var ctx = canvas.getContext && canvas.getContext('2d');
-  if (!ctx) return;
-
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var DPR = Math.min(window.devicePixelRatio || 1, 2);
-  var W = 0, H = 0, dots = [], GAP = 46, R0 = 1.1;
-  var pointer = { x: -9999, y: -9999, on: false };
-  var REACH = 130, t = 0, running = false, raf = null, idle = 0, visible = true;
-
-  function build() {
-    var r = hero.getBoundingClientRect();
-    W = r.width; H = r.height;
-    if (W <= 0 || H <= 0) return;
-    canvas.width = Math.round(W * DPR);
-    canvas.height = Math.round(H * DPR);
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    dots = [];
-    // keep dot count light even on wide screens
-    var gap = W > 1400 ? 54 : GAP;
-    var cols = Math.ceil(W / gap) + 1, rows = Math.ceil(H / gap) + 1;
-    for (var j = 0; j < rows; j++) {
-      for (var i = 0; i < cols; i++) {
-        var x = i * gap, y = j * gap;
-        dots.push({ x: x, y: y, bx: x, by: y, ph: (i * 0.6 + j * 0.9) });
-      }
-    }
-  }
-
-  if (!reduce) {
-    window.addEventListener('pointermove', function (e) {
-      var r = canvas.getBoundingClientRect();
-      pointer.x = e.clientX - r.left; pointer.y = e.clientY - r.top; pointer.on = true;
-      idle = 0; ensureRun();
-    }, { passive: true });
-    window.addEventListener('pointerleave', function () { pointer.on = false; });
-  }
-
-  function frame() {
-    t += 0.012;
-    ctx.clearRect(0, 0, W, H);
-    var moved = false;
-    for (var k = 0; k < dots.length; k++) {
-      var d = dots[k];
-      var sw = Math.sin(t + d.ph) * 1.6;           // slow ambient breathing
-      var tx = d.bx, ty = d.by + sw;
-      var a = 0;
-      if (pointer.on) {
-        var dx = d.bx - pointer.x, dy = d.by - pointer.y, dist = Math.hypot(dx, dy);
-        if (dist < REACH) {
-          var push = (1 - dist / REACH);
-          tx += (dx / (dist || 1)) * push * 16;     // lean away from cursor
-          ty += (dy / (dist || 1)) * push * 16;
-          a = push;                                  // closeness → orange warmth
-        }
-      }
-      d.x += (tx - d.x) * 0.12; d.y += (ty - d.y) * 0.12;  // spring back
-      if (Math.abs(tx - d.x) > 0.3 || Math.abs(ty - d.y) > 0.3) moved = true;
-      var r = R0 + a * 1.4;
-      if (a > 0.04) {
-        ctx.fillStyle = 'rgba(255,92,26,' + (0.12 + a * 0.6) + ')';
-      } else {
-        ctx.fillStyle = 'rgba(27,27,27,0.10)';
-      }
-      ctx.beginPath(); ctx.arc(d.x, d.y, r, 0, Math.PI * 2); ctx.fill();
-    }
-    if (pointer.on || moved) idle = 0; else idle++;
-    if (idle > 240) { running = false; raf = null; return; }   // coast to a stop
-    raf = requestAnimationFrame(frame);
-  }
-
-  function ensureRun() {
-    if (reduce || !visible) return;
-    if (!running) { running = true; raf = requestAnimationFrame(frame); }
-  }
-
-  function paintStill() {
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = 'rgba(27,27,27,0.10)';
-    for (var k = 0; k < dots.length; k++) {
-      ctx.beginPath(); ctx.arc(dots[k].bx, dots[k].by, R0, 0, Math.PI * 2); ctx.fill();
-    }
-  }
-
-  if (window.IntersectionObserver) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (en) {
-        visible = en.isIntersecting;
-        if (visible) { ensureRun(); }
-        else if (raf) { cancelAnimationFrame(raf); raf = null; running = false; }
-      });
-    }, { threshold: 0 });
-    io.observe(hero);
-  }
-
-  var rt;
-  window.addEventListener('resize', function () {
-    clearTimeout(rt);
-    rt = setTimeout(function () {
-      build();
-      if (reduce) paintStill(); else { idle = 0; ensureRun(); }
-    }, 150);
-  }, { passive: true });
-
-  function start() {
-    build();
-    if (reduce) paintStill(); else ensureRun();
-  }
-  // defer init until after first paint so the hero text never waits on us
-  if (document.readyState === 'complete') { requestAnimationFrame(start); }
-  else { window.addEventListener('load', function () { requestAnimationFrame(start); }); }
-})();
-</script>
+<!-- 点描の余白 (Quiet Field) — hero back layer. Shared component (canonical in
+     ut-brand skill). Deferred, decoupled from behavior.js. Decoration only;
+     never blocks content. Config via canvas#hero-field data-* above. -->
+<script src="./quiet-field.js"></script>
 
 </body>
 </html>

@@ -168,7 +168,8 @@ img { display: block; max-width: 100%; }
 .heroes[data-hero="C"] .hero-C { display: block; }
 
 /* 点描の余白 (Quiet Field) — decorative back layer.
-   Behind all hero text, ignores the pointer, never blocks scroll/tap. */
+   Behind all hero text, ignores the pointer, never blocks scroll/tap.
+   Canonical source: ut-brand/base.css #hero-field (kept value-identical here). */
 #hero-field {
   position: absolute;
   inset: 0;
