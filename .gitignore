@@ -1,8 +1,8 @@
 # =============================================================
 # UT-OS .gitignore  ----  ALLOWLIST 方式（許可リスト）
 # 公開するのは sites/ apps/ brand/ と README/LICENSE/.gitignore のみ。
-# それ以外（business/ investing/ research/ products/ _archive/ や
-# 将来作る新しいルートフォルダ）は「既定で全部無視」。
+# それ以外（business/ investing/ research/ tools/ _lab/ _archive/
+# _dashboard/ や将来作る新しいルートフォルダ）は「既定で全部無視」。
 #
 # 安全方向の設計：万一ミスしても「公開ファイルを誤って“除外”」する
 # （= GitHubに出ない → すぐ気づく → 直せる）方向に倒れる。
@@ -73,7 +73,5 @@
 # 公開フォルダに紛れた下書き・ビジュアル編集の副産物（公開しない）
 # Claude のビジュアル編集スキャフォールド（サイト本体からは未参照）
 **/tweaks-*.jsx
-# プロフィール README の下書き（本体は username/username リポへ）
-/brand/github-profile/
-# 実験・プロトタイプ（ローカルで試す用・公開しない）
-**/_experiments/
+# 実験・試作・下書き（ローカル用・公開しない）
+**/_lab/
